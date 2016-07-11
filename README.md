@@ -1,6 +1,6 @@
 # TODO
 
-This is a TODO application build using Angular 2.
+This is a TODO application built with Angular 2.
 
 
 Resources : 
