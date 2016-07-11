@@ -1,0 +1,55 @@
+<h5>
+    <strong>Create New Item</strong>
+</h5>
+<form (keydown)="onCreateSubmit(item,$event,headcbb)">
+    <table class="table">
+        <tr>
+            <td>
+                <input ng-trim="true" placeholder="Enter Item Description" type="text" class="form-control todos__create-input" [(ngModel)]="item.title">
+            </td>
+            <td>
+                <input id="submitbutton" class="btn btn-success todos__create-button" (click)="onCreateSubmit(item,$event,headcbb)" type="button" value="Submit">
+            </td>
+        </tr>
+    </table>
+</form>
+<span *ngIf="todoSrvc.todolist">
+    <strong>{{todoSrvc.todolist.length}}</strong>
+    Item<span *ngIf="todoSrvc.todolist.length==0 || todoSrvc.todolist.length > 1 ">s</span>
+</span>
+<table class="table table-striped">
+    <tr>
+        <th>
+            <input type="checkbox" unchecked #headcbb [(ngModel)]="headcbb.checked" (change)="toggleMain($event,headcbb)"/>Mark all as complete
+        </th>
+        <th>Task</th>
+        <th>Actions</th>
+        <th>Status</th>
+    </tr>
+    <tr (dblclick)="eventEmitDoubleClick(item,$event)" *ngFor="let item of todoSrvc.todolist">
+        <td>
+            <input type="checkbox" unchecked id="{{item.id}}" [(ngModel)]="item.selected" (change)="toggleIndividual($event, item,headcbb)"/>
+        </td>
+        <td>
+            <span *ngIf="!item.isEditing">
+                <span (mouseover)="toggleIndividual($event, item,headcbb)">{{ item.title }}</span>
+            </span>
+            <span *ngIf="item.isEditing">
+                <form (keydown)="onEditSubmit(item,$event)" >
+                    <input ng-trim="true" type="text" class="form-control todos__update-input" [(ngModel)]="item.title" (blur)="onEditSubmit(item,$event)">
+                </form>
+            </span>
+        </td>
+        <td>
+            <button *ngIf="!item.isEditing && item.completed" class="btn btn-default" type="submit" (click)="onRemove(item,headcbb)">
+                Clear Completed
+            </button>
+        </td>
+        <td>
+            <span *ngIf="item.completed">
+                Completed</span>
+            <span *ngIf="!item.completed">
+                Pending</span>
+        </td>
+    </tr>
+</table>
