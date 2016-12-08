@@ -2,7 +2,6 @@
 
 This is a TODO application built with Angular 2.
 
-
 Resources : 
 Microsoft Virtual Academy Angular 2
 http://angular.io
